@@ -81,7 +81,6 @@ void checkout(Customer &customer, Cart &cart)
         std::cout << "Payment successful! Customer balance: $" << std::fixed << std::setprecision(2)
                   << customer.getBalance() << std::endl;
 
-        // Clear cart after successful checkout
         cart.clear();
     }
     catch (const std::exception &e)
@@ -94,32 +93,26 @@ int main()
 {
     try
     {
-        // Create products
-        time_t futureDate = time(0) + 86400 * 30; // 30 days from now
-        time_t pastDate = time(0) - 86400;        // 1 day ago (expired)
 
-        // Perishable products
+        time_t futureDate = time(0) + 86400 * 30;
+        time_t pastDate = time(0) - 86400;
+
         auto cheese = std::make_shared<PerishableProduct>("Cheese", 100.0, 10, true, futureDate, 0.2);
         auto biscuits = std::make_shared<PerishableProduct>("Biscuits", 150.0, 5, true, futureDate, 0.7);
         auto expiredMilk = std::make_shared<PerishableProduct>("Milk", 50.0, 3, true, pastDate, 0.5);
 
-        // Non-perishable products
         auto tv = std::make_shared<NonPerishableProduct>("TV", 500.0, 2, true, 15.0);
         auto mobile = std::make_shared<NonPerishableProduct>("Mobile", 800.0, 1, true, 0.3);
 
-        // Digital products
         auto scratchCard = std::make_shared<DigitalProduct>("Scratch Card", 10.0, 100);
 
-        // Create customer
         Customer customer("Ahmed Saad", 2000.0);
 
-        // Create cart
         Cart cart;
 
         std::cout << "=== E-COMMERCE SYSTEM DEMO ===" << std::endl
                   << std::endl;
 
-        // Test Case 1: Successful checkout with mixed items
         std::cout << "Test Case 1: Successful checkout with mixed items" << std::endl;
         cart.add(cheese, 2);
         cart.add(biscuits, 1);
@@ -127,19 +120,16 @@ int main()
         checkout(customer, cart);
         std::cout << std::endl;
 
-        // Test Case 2: Checkout with TV (heavy item)
         std::cout << "Test Case 2: Checkout with TV (heavy item)" << std::endl;
         cart.add(tv, 1);
         checkout(customer, cart);
         std::cout << std::endl;
 
-        // Test Case 3: Empty cart
         std::cout << "Test Case 3: Empty cart checkout" << std::endl;
         Cart emptyCart;
         checkout(customer, emptyCart);
         std::cout << std::endl;
 
-        // Test Case 4: Insufficient balance
         std::cout << "Test Case 4: Insufficient balance" << std::endl;
         Customer poorCustomer("Jane Doe", 50.0);
         cart.add(tv, 1);
@@ -147,21 +137,18 @@ int main()
         cart.clear();
         std::cout << std::endl;
 
-        // Test Case 5: Expired product
         std::cout << "Test Case 5: Expired product" << std::endl;
         cart.add(expiredMilk, 1);
         checkout(customer, cart);
         cart.clear();
         std::cout << std::endl;
 
-        // Test Case 6: Out of stock
         std::cout << "Test Case 6: Out of stock" << std::endl;
-        cart.add(mobile, 5); // Only 1 available
+        cart.add(mobile, 5);
         checkout(customer, cart);
         cart.clear();
         std::cout << std::endl;
 
-        // Test Case 7: Only digital products (no shipping)
         std::cout << "Test Case 7: Only digital products (no shipping)" << std::endl;
         cart.add(scratchCard, 3);
         checkout(customer, cart);

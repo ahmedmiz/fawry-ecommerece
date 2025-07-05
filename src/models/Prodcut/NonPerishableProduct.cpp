@@ -12,20 +12,12 @@
 #include "../../interface/IShippable.h"
 #include "NonPerishableProduct.h"
 
-class NonPerishableProduct : public Product, public IShippable
-{
-private:
-    double weight; // in kg
+NonPerishableProduct::NonPerishableProduct(const std::string &name, double price, int quantity,
+                                           bool requiresShipping, double weight)
+    : Product(name, price, quantity, requiresShipping), weight(weight) {}
 
-public:
-    NonPerishableProduct(const std::string &name, double price, int quantity,
-                         bool requiresShipping, double weight)
-        : Product(name, price, quantity, requiresShipping), weight(weight) {}
-
-    // IShippable interface implementation
-    std::string getName() const { return name; }
-    double getWeight() const { return weight; }
-};
+std::string NonPerishableProduct::getName() const { return name; }
+double NonPerishableProduct::getWeight() const { return weight; }
 
 // Digital Product class (non-shippable items like scratch cards)
 class DigitalProduct : public Product

@@ -796,4 +796,5 @@ CMakeFiles/fawry-eCommerce.dir/src/models/Cart/CartItem.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/map \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/__tree \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.5.sdk/usr/include/c++/v1/iomanip \
+  /Users/mizoahmed017/downloads/fawry-eCommerce/src/models/Cart/CartItem.h \
   /Users/mizoahmed017/downloads/fawry-eCommerce/src/models/Cart/../Prodcut/Product.h

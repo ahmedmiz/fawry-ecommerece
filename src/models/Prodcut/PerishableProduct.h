@@ -1,9 +1,9 @@
 #pragma once
 
 #include <string>
-#include <ctime>                  // For time_t
-#include "Product.h"              // Base class declaration
-#include "interface/IShippable.h" // Interface declaration
+#include <ctime>                        // For time_t
+#include "Product.h"                    // Base class declaration
+#include "../../interface/IShippable.h" // Interface declaration
 
 // PerishableProduct class definition
 class PerishableProduct : public Product, public IShippable

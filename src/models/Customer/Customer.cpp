@@ -1,38 +1,20 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <memory>
-#include <map>
-#include <stdexcept>
-#include <iomanip>
-#include <ctime>
-#include <algorithm>
+#include "Customer.h"
 
-#include "../../interface/IShippable.h"
+Customer::Customer(const std::string &name, double balance)
+    : name(name), balance(balance) {}
 
-class Customer
+std::string Customer::getName() const { return name; }
+double Customer::getBalance() const { return balance; }
+
+bool Customer::hasEnoughBalance(double amount) const
 {
-private:
-    std::string name;
-    double balance;
+    return balance >= amount;
+}
 
-public:
-    Customer(const std::string &name, double balance)
-        : name(name), balance(balance) {}
-
-    std::string getName() const { return name; }
-    double getBalance() const { return balance; }
-
-    bool hasEnoughBalance(double amount) const
+void Customer::deductBalance(double amount)
+{
+    if (hasEnoughBalance(amount))
     {
-        return balance >= amount;
+        balance -= amount;
     }
-
-    void deductBalance(double amount)
-    {
-        if (hasEnoughBalance(amount))
-        {
-            balance -= amount;
-        }
-    }
-};
+}

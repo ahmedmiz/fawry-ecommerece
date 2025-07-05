@@ -1,33 +1,13 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <memory>
-#include <map>
-#include <stdexcept>
-#include <iomanip>
-#include <ctime>
-#include <algorithm>
+#include "PerishableProduct.h"
 
-#include "Product.h"
-#include "../../interface/IShippable.h"
+PerishableProduct::PerishableProduct(const std::string &name, double price, int quantity,
+                                     bool requiresShipping, time_t expirationDate, double weight)
+    : Product(name, price, quantity, requiresShipping), expirationDate(expirationDate), weight(weight) {}
 
-class PerishableProduct : public Product, public IShippable
+bool PerishableProduct::isExpired() const
 {
-private:
-    time_t expirationDate;
-    double weight; // in kg
+    return time(0) > expirationDate;
+}
 
-public:
-    PerishableProduct(const std::string &name, double price, int quantity,
-                      bool requiresShipping, time_t expirationDate, double weight = 0.0)
-        : Product(name, price, quantity, requiresShipping), expirationDate(expirationDate), weight(weight) {}
-
-    bool isExpired() const override
-    {
-        return time(0) > expirationDate;
-    }
-
-    // IShippable interface implementation
-    std::string getName() const override { return name; }
-    double getWeight() const override { return weight; }
-};
+std::string PerishableProduct::getName() const { return name; }
+double PerishableProduct::getWeight() const { return weight; }

@@ -8,21 +8,28 @@
 #include <ctime>
 #include <algorithm>
 
+#include "CartItem.h"
 #include "../Prodcut/Product.h"
 
-class CartItem
+CartItem::CartItem(std::shared_ptr<Product> product, int quantity)
+    : product(product), quantity(quantity) {}
+
+std::shared_ptr<Product> CartItem::getProduct() const
 {
-private:
-    std::shared_ptr<Product> product;
-    int quantity;
+    return product;
+}
 
-public:
-    CartItem(std::shared_ptr<Product> product, int quantity)
-        : product(product), quantity(quantity) {}
+int CartItem::getQuantity() const
+{
+    return quantity;
+}
 
-    std::shared_ptr<Product> getProduct() const { return product; }
-    int getQuantity() const { return quantity; }
-    double getTotalPrice() const { return product->getPrice() * quantity; }
+double CartItem::getTotalPrice() const
+{
+    return product->getPrice() * quantity;
+}
 
-    void setQuantity(int quantity) { this->quantity = quantity; }
-};
+void CartItem::setQuantity(int quantity)
+{
+    this->quantity = quantity;
+}

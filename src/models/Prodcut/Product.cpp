@@ -1,53 +1,31 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <memory>
-#include <map>
-#include <stdexcept>
-#include <iomanip>
-#include <ctime>
-#include <algorithm>
+#include "Product.h"
 
-#include "../../interface/IShippable.h"
+Product::Product(const std::string &name, double price, int quantity, bool requiresShipping)
+    : name(name), price(price), quantity(quantity), requiresShipping(requiresShipping) {}
 
-class Product
+// Getters
+std::string Product::getName() const { return name; }
+double Product::getPrice() const { return price; }
+int Product::getQuantity() const { return quantity; }
+bool Product::getRequiresShipping() const { return requiresShipping; }
+
+// Check if product is available
+bool Product::isAvailable(int requestedQuantity) const
 {
-protected:
-    std::string name;
-    double price;
-    int quantity;
-    bool requiresShipping;
+    return quantity >= requestedQuantity && !isExpired();
+}
 
-public:
-    Product(const std::string &name, double price, int quantity, bool requiresShipping)
-        : name(name), price(price), quantity(quantity), requiresShipping(requiresShipping) {}
+// Check if product is expired (default: never expires)
+bool Product::isExpired() const { return false; }
 
-    virtual ~Product() = default;
-
-    // Getters
-    std::string getName() const { return name; }
-    double getPrice() const { return price; }
-    int getQuantity() const { return quantity; }
-    bool getRequiresShipping() const { return requiresShipping; }
-
-    // Check if product is available
-    virtual bool isAvailable(int requestedQuantity) const
+// Reduce quantity when purchased
+void Product::reduceQuantity(int amount)
+{
+    if (amount <= quantity)
     {
-        return quantity >= requestedQuantity && !isExpired();
+        quantity -= amount;
     }
+}
 
-    // Check if product is expired (default: never expires)
-    virtual bool isExpired() const { return false; }
-
-    // Reduce quantity when purchased
-    void reduceQuantity(int amount)
-    {
-        if (amount <= quantity)
-        {
-            quantity -= amount;
-        }
-    }
-
-    // Virtual method to get weight (for shippable items)
-    virtual double getWeight() const { return 0.0; }
-};
+// Virtual method to get weight (for shippable items)
+double Product::getWeight() const { return 0.0; }
