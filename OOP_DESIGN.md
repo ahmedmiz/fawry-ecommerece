@@ -7,20 +7,91 @@ This document describes the object-oriented design of the Fawry E-Commerce C++ p
 ## Class Diagram
 
 ```mermaid
-graph TD
-  Product <|-- PerishableProduct
-  Product <|-- NonPerishableProduct
-  Product <|-- DigitalProduct
-  Product o-- IShippable
-  CartItem o-- Product
-  Cart o-- CartItem
-  Cart o-- IShippable
-  Customer o-- Cart
-  ShippingService ..> IShippable
+classDiagram
+    class Product {
+        <<abstract>>
+        +string name
+        +double price
+        +int quantity
+        +bool requiresShipping
+        +getName() string
+        +getPrice() double
+        +getQuantity() int
+        +getRequiresShipping() bool
+        +isAvailable(int) bool
+        +isExpired() bool
+        +reduceQuantity(int) void
+        +getWeight() double
+    }
 
-  classDef abstract fill:#f9f,stroke:#333,stroke-width:2px;
-  Product:::abstract
-  IShippable:::abstract
+    class PerishableProduct {
+        +time_t expirationDate
+        +double weight
+        +isExpired() bool
+        +getWeight() double
+    }
+
+    class NonPerishableProduct {
+        +double weight
+        +getWeight() double
+    }
+
+    class DigitalProduct {
+        +getWeight() double
+    }
+
+    class IShippable {
+        <<interface>>
+        +getWeight() double
+        +getName() string
+    }
+
+    class CartItem {
+        +shared_ptr~Product~ product
+        +int quantity
+        +getProduct() shared_ptr~Product~
+        +getQuantity() int
+        +getTotalPrice() double
+        +setQuantity(int) void
+    }
+
+    class Cart {
+        +vector~CartItem~ items
+        +add(Product, int) void
+        +isEmpty() bool
+        +getSubtotal() double
+        +getShippableItems() vector~IShippable~
+        +getItemQuantities() map~string,int~
+        +getItems() vector~CartItem~
+        +clear() void
+        +validateCart() bool
+        +updateProductQuantities() void
+    }
+
+    class Customer {
+        +string name
+        +double balance
+        +hasEnoughBalance(double) bool
+        +deductBalance(double) void
+        +getBalance() double
+    }
+
+    class ShippingService {
+        <<static>>
+        +calculateShippingFee(vector~IShippable~) double
+        +processShipment(vector~IShippable~, map~string,int~) void
+    }
+
+    Product <|-- PerishableProduct
+    Product <|-- NonPerishableProduct
+    Product <|-- DigitalProduct
+    PerishableProduct ..|> IShippable
+    NonPerishableProduct ..|> IShippable
+    CartItem --> Product
+    Cart --> CartItem
+    Cart --> IShippable
+    Customer --> Cart
+    ShippingService --> IShippable
 ```
 
 ---

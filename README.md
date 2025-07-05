@@ -102,3 +102,7 @@ When you run the program, it will execute several test cases, such as:
 - Only digital products (no shipping)
 
 Each case demonstrates the system's logic and error handling.
+
+## Documentation
+
+- **[OOP_DESIGN.md](OOP_DESIGN.md)** - Detailed object-oriented design documentation with class diagrams and relationships
