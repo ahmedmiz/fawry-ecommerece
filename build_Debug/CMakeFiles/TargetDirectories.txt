@@ -1,0 +1,4 @@
+/Users/mizoahmed017/downloads/fawry-eCommerce/build_Debug/CMakeFiles/fawry-eCommerce.dir
+/Users/mizoahmed017/downloads/fawry-eCommerce/build_Debug/CMakeFiles/test.dir
+/Users/mizoahmed017/downloads/fawry-eCommerce/build_Debug/CMakeFiles/edit_cache.dir
+/Users/mizoahmed017/downloads/fawry-eCommerce/build_Debug/CMakeFiles/rebuild_cache.dir
